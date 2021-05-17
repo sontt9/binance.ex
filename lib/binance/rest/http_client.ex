@@ -50,7 +50,8 @@ defmodule Binance.Rest.HTTPClient do
         argument_string = URI.encode_query(params)
 
         signature =
-          :crypto.hmac(
+          :crypto.mac(
+            :hmac,
             :sha256,
             secret_key,
             argument_string
@@ -68,7 +69,8 @@ defmodule Binance.Rest.HTTPClient do
 
     # generate signature
     signature =
-      :crypto.hmac(
+      :crypto.mac(
+        :hmac,
         :sha256,
         Application.get_env(:binance, :secret_key),
         argument_string
